@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <title>sprintf javascript</title>
+    <script type="text/javascript" src="libs/sprintf.js"></script>
+    <script type="text/javascript">
+      function init(){
+          document.getElementById('out1').innerHTML = sprintf("hello %s", 'world');
+          document.getElementById('out2').innerHTML = sprintf("%d monkeys", 12);
+          document.getElementById('out3').innerHTML = sprintf("%3.1f%% of %d MB used", 34.56, 1024);;
+          document.getElementById('out4').innerHTML = sprintf("%2$3.1f%% of %1$d MB used", 1024, 34.56);
+          document.getElementById('out5').innerHTML = sprintf("My %2$s account: %1$'.+10.2f %3$s", 0.592, 'giro', 'EUR');
+      }
+      if (window.addEventListener) {
+          addEventListener("load", init, false);
+      } else {
+          attachEvent("onload", init);
+      }
+    </script>
+  </head>
+  <body>
+    <ul>
+      <li>
+        <code>sprintf("hello %s", 'world');</code>
+        <div id="out1"></div>
+      </li>
+      <li>
+        <code>sprintf("%d monkeys", 12);</code>
+        <div id="out2"></div>
+      </li>
+      <li>
+        <code>sprintf("%3.1f%% of %d MB used", 34.56, 1024);</code>
+        <div id="out3"></div>
+      </li>
+      <li>
+        <code>sprintf("%2$3.1f%% of %1$d MB used", 1024, 34.56);</code>
+        <div id="out4"></div>
+      </li>
+      <li>
+        <code>sprintf("My %2$s account: %1$'.+10.2f %3$s", 0.592, 'giro', 'EUR');</code>
+        <div id="out5"></div>
+      </li>
+    </ul>
+  </body>
+</html>
