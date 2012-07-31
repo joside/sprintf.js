@@ -5,7 +5,6 @@
 var sprintf = (function(){
     "use strict";
     var re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|f|F|g)(.*)/;
-    //left,argnum,padding,justify,alwayssigned,minlen,precision,conversion,right
     return function(){
         var str,
             a = [],
@@ -25,7 +24,6 @@ var sprintf = (function(){
             alwayssigned = false;
         
         if(!arguments || arguments.length < 1){
-            _debug('Nothing to print.')
             return;
         }
         str = arguments[0];
@@ -40,7 +38,6 @@ var sprintf = (function(){
             conversion = a[8];
             right = a[9];
             if(argnum && argnum < 1 && argnum > arguments.length - 1){
-                _debug('Invalid argument number ' + argnum);
                 return;
             }
             if(argnum){
@@ -48,7 +45,6 @@ var sprintf = (function(){
                 useArgNum = true;
             } else {
                 if(useArgNum && conversion !== '%'){
-                    _debug('Do not mix using argument numbers with not using them');
                     return;
                 }
                 crtArgument = arguments[crtArgumentCtr++];
