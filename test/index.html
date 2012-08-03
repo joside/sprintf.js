@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>QUnit Example</title>
+  <title>QUnit sprintf</title>
   <link rel="stylesheet" href="res/qunit-1.9.0.css">
 </head>
 <body>
@@ -10,11 +10,30 @@
   <script src="res/qunit-1.9.0.js"></script>
   <script src="../libs/sprintf.js"></script>
   <script>
-    test("sprintf basics", function() {
-        equal(sprintf("hello %s", 'world'), "hello world");
-        equal(sprintf("%d monkeys", 12), "12 monkeys");
-        equal(sprintf("%d monkeys", "12"), "12 monkeys");
-        equal(sprintf("%3.1f%% of %d MB used", 34.56, 1024), "34.6% of 1024 MB used");
+    module("basic");
+    test("string", function() {
+        equal(sprintf("hello %s", 'world'), "hello world", "normal string replacement ok");
+        equal(sprintf("%%"), "%", "% sign ok");
+    });
+    test("integer", function() {
+        equal(sprintf("%d monkeys", 12), "12 monkeys", "inserting %d with number ok");
+        equal(sprintf("%d monkeys", "12"), "12 monkeys", "inserting %d with string ok");
+    });
+    test("hex", function() {
+        equal(sprintf("%x", 255), "ff", "lowercase hex output ok");
+        equal(sprintf("%X", 255), "FF", "uppercase hex output ok");
+    });
+    test("hex", function() {
+        equal(sprintf("%f", 3.141), "3.141", "floating point ok");
+        equal(sprintf("%.2f", 3.141), "3.14", "floating point with two decimals ok");
+        equal(sprintf("%+.2f", 3.141), "+3.14", "always signed floating point with two decimals ok");
+    });
+    test("unsigned", function() {
+        equal(sprintf("%u", -3.141), "3", "unsigned integer ok");
+    });
+    module("argument order");
+    test("sprintf argument order", function() {
+        equal(sprintf("%3.1f%% of %d MB used", 34.56, 1024), "34.6% of 1024 MB used", "Normal order is ok");
         equal(sprintf("%2$3.1f%% of %1$d MB used", 1024, 34.56), "34.6% of 1024 MB used");                 
         equal(sprintf("My %2$s account: %1$'.+10.2f %3$s", 0.592, 'giro', 'EUR'), "My giro account: .....+0.59 EUR");
     });
