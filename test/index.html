@@ -30,6 +30,12 @@
         equal(sprintf("%+.2f", 3.141), "+3.14", "always signed floating point with two decimals ok");
         equal(sprintf("%+.2f", -3.141), "-3.14", "always signed negative floating point with two decimals ok");
     });
+    test("scientific notation", function() {
+        equal(sprintf("%e", 3000000000000), "3e+12", "without precision, lowercase e ok");
+        equal(sprintf("%.4e", 1234.56789), "1.2346e+3", "with precision=4, lowercase e ok");
+        equal(sprintf("%E", 3000000000000), "3E+12", "without precision, uppercase e ok");
+        equal(sprintf("%.4E", 1234.56789), "1.2346E+3", "with precision=4, uppercase e ok");
+    });
     test("octal", function() {
         equal(sprintf("%o", 8), "10", "octal numbers ok");
         equal(sprintf("%o", -8), "-10", "negative octal numbers ok");

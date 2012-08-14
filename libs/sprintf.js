@@ -4,7 +4,7 @@
  */
 var sprintf = (function(){
     "use strict";
-    var re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|f|F|g)(.*)/;
+    var re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|E|f|F|g)(.*)/;
     return function(){
         var str,
             a = [],
@@ -105,7 +105,19 @@ var sprintf = (function(){
                     break;
                 case 'e':
                     //a floating-point number, in scientific notation
-                    //wip
+                    repl = parseFloat(crtArgument,10);
+                    repl = repl.toExponential(precision);
+                    if(alwayssigned && repl > 0){
+                        repl = '+' + repl;
+                    }
+                    break;
+                case 'E':
+                    //a floating-point number, in scientific notation
+                    repl = parseFloat(crtArgument,10);
+                    repl = repl.toExponential(precision).toUpperCase();
+                    if(alwayssigned && repl > 0){
+                        repl = '+' + repl;
+                    }
                     break;
                 case 'F':
                 case 'f':
