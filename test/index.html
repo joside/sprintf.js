@@ -23,19 +23,44 @@
         equal(sprintf("%x", 255), "ff", "lowercase hex output ok");
         equal(sprintf("%X", 255), "FF", "uppercase hex output ok");
     });
-    test("hex", function() {
+    test("float", function() {
         equal(sprintf("%f", 3.141), "3.141", "floating point ok");
+        equal(sprintf("%f", "12.01"), "12.01", "inserting %f with string ok");
         equal(sprintf("%.2f", 3.141), "3.14", "floating point with two decimals ok");
         equal(sprintf("%+.2f", 3.141), "+3.14", "always signed floating point with two decimals ok");
+        equal(sprintf("%+.2f", -3.141), "-3.14", "always signed negative floating point with two decimals ok");
     });
-    test("unsigned", function() {
+    test("octal", function() {
+        equal(sprintf("%o", 8), "10", "octal numbers ok");
+        equal(sprintf("%o", -8), "-10", "negative octal numbers ok");
+        equal(sprintf("%o", "8"), "10", "octal numbers from strings ok");
+    });
+    test("binary", function() {
+        equal(sprintf("%b", 255), "11111111", "binary output ok");
+        equal(sprintf("%b", "255"), "11111111", "binary output from strings ok");
+    });
+    test("unsigned integer", function() {
         equal(sprintf("%u", -3.141), "3", "unsigned integer ok");
+    });
+    test("char", function() {
+        equal(sprintf("%c", 65), "A", "65 to A ok");
+        equal(sprintf("%c", 66), "B", "66 to B ok");
+        equal(sprintf("%c", "65"), "A", "'66' to A ok");
     });
     module("argument order");
     test("sprintf argument order", function() {
         equal(sprintf("%3.1f%% of %d MB used", 34.56, 1024), "34.6% of 1024 MB used", "Normal order is ok");
         equal(sprintf("%2$3.1f%% of %1$d MB used", 1024, 34.56), "34.6% of 1024 MB used");                 
         equal(sprintf("My %2$s account: %1$'.+10.2f %3$s", 0.592, 'giro', 'EUR'), "My giro account: .....+0.59 EUR");
+    });
+    module("minlength");
+    test("strings", function() {
+        equal(sprintf("%'.+10.2s", "A"), ".........A", "String with minlen 10, filled up with dots and justified left");
+        equal(sprintf("%'.-10.2s", "A"), "A.........", "String with minlen 10, filled up with dots and justified right");
+    });
+    test("floats", function() {
+        equal(sprintf("%'.+10.3f", 1.01), "....+1.010", "Always signed float with 3 decimals, filled up with dots and justified left");
+        equal(sprintf("%'.-+10.3f", 1.01), "+1.010....", "Always signed float with 3 decimals, filled up with dots and justified right");
     });
     </script>
 </body>
