@@ -1,6 +1,10 @@
 /**
- * A sprintf function
- * @author Michael Jostmeyer
+ * sprintf.js - another implementation of the classic sprintf in javascript
+ *
+ * - pure javascript - no libs needed
+ * 
+ * @copyright 2012 Michael Jostmeyer
+ * @license BSD 3-Clause License
  */
 var sprintf = (function(){
     "use strict";
