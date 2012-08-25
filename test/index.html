@@ -36,6 +36,12 @@
         equal(sprintf("%E", 3000000000000), "3E+12", "without precision, uppercase e ok");
         equal(sprintf("%.4E", 1234.56789), "1.2346E+3", "with precision=4, uppercase e ok");
     });
+    test("float or scientific notation", function() {
+        equal(sprintf("%g", 3000000000000), "3e+12", "without precision, should be exponential, lowercase e ok");
+        equal(sprintf("%.4g", 1234.56789), "1234.5679", "with precision=4, should be float ok");
+        equal(sprintf("%G", 3000000000000), "3E+12", "without precision, should be exponential, uppercase e ok");
+        equal(sprintf("%.4G", 1234.56789), "1234.5679", "with precision=4, should be float ok");
+    });
     test("octal", function() {
         equal(sprintf("%o", 8), "10", "octal numbers ok");
         equal(sprintf("%o", -8), "-10", "negative octal numbers ok");

@@ -8,7 +8,36 @@
  */
 var sprintf = (function(){
     "use strict";
-    var re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|E|f|F|g)(.*)/;
+    var re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|E|f|F|g|G)(.*)/;
+    
+    function e(value, precision, uppercase){
+        value = parseFloat(value,10);
+        value = value.toExponential(precision);
+        if(uppercase){
+            value = value.toUpperCase();
+        }
+        return value;
+    }
+    
+    function f(value, precision){
+        value = parseFloat(value,10);
+        if(precision){
+            value = value.toFixed(precision);
+        }
+        return value;
+    }
+    
+    function g(value, precision, uppercase){
+        var v1 = e(value, precision, uppercase).toString(),
+            v2 = f(value, precision).toString();
+            
+        if(v1.length >= v2.length) {
+            return v2;
+        } else {
+            return v1;
+        }
+    }
+    
     return function(){
         var str,
             a = [],
@@ -109,8 +138,7 @@ var sprintf = (function(){
                     break;
                 case 'e':
                     //a floating-point number, in scientific notation
-                    repl = parseFloat(crtArgument,10);
-                    repl = repl.toExponential(precision);
+                    repl = e(crtArgument, precision, false);
                     if(alwayssigned && repl > 0){
                         repl = '+' + repl;
                     }
@@ -126,17 +154,24 @@ var sprintf = (function(){
                 case 'F':
                 case 'f':
                     //a floating-point number, in fixed decimal notation
-                    repl = parseFloat(crtArgument,10);
-                    if(precision){
-                        repl = repl.toFixed(precision);
-                    }
+                    repl = f(crtArgument,precision);
                     if(alwayssigned && repl > 0){
                         repl = '+' + repl;
                     }
                     break;
                 case 'g':
                     //a floating-point number, in %e or %f notation
-                    //wip
+                    repl = g(crtArgument,precision, false);
+                    if(alwayssigned && repl > 0){
+                        repl = '+' + repl;
+                    }
+                    break;
+                case 'G':
+                    //a floating-point number, in %E or %f notation
+                    repl = g(crtArgument,precision, true);
+                    if(alwayssigned && repl > 0){
+                        repl = '+' + repl;
+                    }
                     break;
             }
             if(minlen && repl.toString().length < minlen){
