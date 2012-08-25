@@ -29,9 +29,9 @@ Documentation
 
     String sprintf ( String format [, mixed arguments] )
 
-## Parameters ##
+# Parameters #
 
-# format #
+## format ##
 
 The format string is composed of zero or more directives: ordinary characters (excluding %) that are copied directly to the result, and conversion specifications, each of which results in fetching its own parameter. 
 Each conversion specification consists of a percent sign (%), followed by one or more of these elements, in order:
@@ -44,7 +44,7 @@ Each conversion specification consists of a percent sign (%), followed by one or
 
 A type specifier that says what type the argument data should be treated as.
 
-Possible types:
+### Possible types ###
 * % - a literal percent character. No argument is required.
 * b - the argument is treated as an integer, and presented as a binary number.
 * c - the argument is treated as an integer, and presented as the character with that ASCII value.
@@ -60,3 +60,27 @@ Possible types:
 * s - the argument is treated as and presented as a string.
 * x - the argument is treated as an integer and presented as a hexadecimal number (with lowercase letters).
 * X - the argument is treated as an integer and presented as a hexadecimal number (with uppercase letters).
+
+### argument numbering/swapping ###
+The format string supports argument numbering/swapping. Here is an example:
+
+    var format = 'There are %d monkeys in the %s',
+        text = sprintf(format,12,'world');
+
+Imagine, we want to rewrite the text without changing the code itself:
+
+    var format = 'The %s contains %d',
+        text = sprintf(format,12,'world');
+
+We have some problems now: The order and type of placeholders does not match the order of arguments in the code. So we have to rewrite the format string:
+
+    var format = 'The %2$s contains %1$d',
+        text = sprintf(format,12,'world');
+
+### padding ###
+
+### precision ###
+
+### justify left and right ###
+
+### always signed values ###
