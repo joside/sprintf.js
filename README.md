@@ -54,7 +54,7 @@ A type specifier that says what type the argument data should be treated as.
 * E - like %e but uses uppercase letter (e.g. 1.2E+2).
 * u - the argument is treated as an integer, and presented as an unsigned decimal number.
 * f - the argument is treated as a float, and presented as a floating-point number (locale aware).
-* F - the argument is treated as a float, and presented as a floating-point number (non-locale aware). Available since PHP 4.3.10 and PHP 5.0.3.
+* F - the argument is treated as a float, and presented as a floating-point number (non-locale aware).
 * g - shorter of %e and %f.
 * G - shorter of %E and %f.
 * o - the argument is treated as an integer, and presented as an octal number.
