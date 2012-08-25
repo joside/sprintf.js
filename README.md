@@ -15,6 +15,9 @@ sprintf.js
 ### Small Demo ###
 <http://playground.josi.de/sprintf/index.html>
 
+### Unit test ###
+<http://playground.josi.de/sprintf/test/index.html>
+
 Using sprintf.js
 ----------------
 
