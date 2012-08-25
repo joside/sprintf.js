@@ -79,13 +79,39 @@ var format = 'The %s contains %d',
 
 We have some problems now: The order and type of placeholders does not match the order of arguments in the code. So we have to rewrite the format string:
 
-    var format = 'The %2$s contains %1$d',
-        text = sprintf(format,12,'world');
+```javascript
+var format = 'The %2$s contains %1$d',
+    text = sprintf(format,12,'world');
+```
 
-### padding ###
+### padding and justifying ###
+
+Point-padded and right justified String, length is 10:
+```javascript
+var text = sprintf("%'.+10s", "test");
+//text == "......test"
+```
+
+Point-padded and left justified String, length is 10:
+```javascript
+var text = sprintf("%'.-10s", "test");
+//text == "test......"
+```
 
 ### precision ###
 
-### justify left and right ###
+```javascript
+var text = sprintf("%.2f", 3.141);
+//text == "3.14"
+```
 
 ### always signed values ###
+
+```javascript
+var text = sprintf("%+.2f", 3.141);
+//text == "+3.14"
+```
+
+## More examples ##
+
+Check out test/index.html for more examples on `sprintf.js`

@@ -61,8 +61,8 @@
     });
     module("minlength");
     test("strings", function() {
-        equal(sprintf("%'.+10.2s", "A"), ".........A", "String with minlen 10, filled up with dots and justified left");
-        equal(sprintf("%'.-10.2s", "A"), "A.........", "String with minlen 10, filled up with dots and justified right");
+        equal(sprintf("%'.+10s", "A"), ".........A", "String with minlen 10, filled up with dots and justified left");
+        equal(sprintf("%'.-10s", "A"), "A.........", "String with minlen 10, filled up with dots and justified right");
     });
     test("floats", function() {
         equal(sprintf("%'.+10.3f", 1.01), "....+1.010", "Always signed float with 3 decimals, filled up with dots and justified left");
