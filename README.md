@@ -65,8 +65,10 @@ A type specifier that says what type the argument data should be treated as.
 ### argument numbering/swapping ###
 The format string supports argument numbering/swapping. Here is an example:
 
-    var format = 'There are %d monkeys in the %s',
-        text = sprintf(format,12,'world');
+~~~~~ javascript
+var format = 'There are %d monkeys in the %s',
+    text = sprintf(format,12,'world');
+~~~~~
 
 Imagine, we want to rewrite the text without changing the code itself:
 
