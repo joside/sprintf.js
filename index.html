@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Sprintf.js by joside</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/joside/sprintf.js">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/joside/sprintf.js/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/joside/sprintf.js/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Sprintf.js</h1>
+          <p>Another implementation of sprintf in JavaScript</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/joside">joside</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>sprintf.js</h1>
+
+<h4>Another implementation of sprintf in JavaScript</h4>
+
+<p><code>sprintf</code> returns - like the sprintf versions in other languages - a formatted String.</p>
+
+<h3>Targeted platforms</h3>
+
+<p><code>sprintf.js</code> currently targets the following platforms:</p>
+
+<ul>
+<li>Mozilla Firefox 14 and higher</li>
+<li>Chrome 18 and higher</li>
+</ul><h3>Small Demo</h3>
+
+<p><a href="http://playground.josi.de/sprintf/index.html">http://playground.josi.de/sprintf/index.html</a></p>
+
+<h3>Unit test</h3>
+
+<p><a href="http://playground.josi.de/sprintf/test/index.html">http://playground.josi.de/sprintf/test/index.html</a></p>
+
+<h2>Using sprintf.js</h2>
+
+<p>To use <code>sprintf.js</code> in your application, download the latest release and copy 
+<code>libs/sprintf.js</code> to a suitable location. Then include it in your HTML
+like so:</p>
+
+<pre><code>&lt;script type="text/javascript" src="/path/to/sprintf.js"&gt;&lt;/script&gt;
+</code></pre>
+
+<h2>Documentation</h2>
+
+<pre><code>String sprintf ( String format [, mixed arguments] )
+</code></pre>
+
+<h1>Parameters</h1>
+
+<h2>format</h2>
+
+<p>The format string is composed of zero or more directives: ordinary characters (excluding %) that are copied directly to the result, and conversion specifications, each of which results in fetching its own parameter. </p>
+
+<p>Each conversion specification consists of a percent sign (%), followed by one or more of these elements, in order:</p>
+
+<ol>
+<li>An optional sign specifier that forces a sign (- or +) to be used on a number. By default, only the - sign is used on a number if it's negative. This specifier forces positive numbers to have the + sign attached as well.</li>
+<li>An optional padding specifier that says what character will be used for padding the results to the right string size. This may be a space character or a 0 (zero character). The default is to pad with spaces. An alternate padding character can be specified by prefixing it with a single quote (').</li>
+<li>An optional alignment specifier that says if the result should be left-justified or right-justified. The default is right-justified; a - character here will make it left-justified.</li>
+<li>An optional number, a width specifier that says how many characters (minimum) this conversion should result in.</li>
+<li>An optional precision specifier in the form of a period (`.') followed by an optional decimal digit string that says how many decimal digits should be displayed for floating-point numbers. When using this specifier on a string, it acts as a cutoff point, setting a maximum character limit to the string.</li>
+</ol><p>A type specifier that says what type the argument data should be treated as.</p>
+
+<h3>Possible types</h3>
+
+<ul>
+<li>% - a literal percent character. No argument is required.</li>
+<li>b - the argument is treated as an integer, and presented as a binary number.</li>
+<li>c - the argument is treated as an integer, and presented as the character with that ASCII value.</li>
+<li>d - the argument is treated as an integer, and presented as a (signed) decimal number.</li>
+<li>e - the argument is treated as scientific notation (e.g. 1.2e+2). The precision specifier stands for the number of digits after the decimal point since PHP 5.2.1. In earlier versions, it was taken as number of significant digits (one less).</li>
+<li>E - like %e but uses uppercase letter (e.g. 1.2E+2).</li>
+<li>u - the argument is treated as an integer, and presented as an unsigned decimal number.</li>
+<li>f - the argument is treated as a float, and presented as a floating-point number (locale aware).</li>
+<li>F - the argument is treated as a float, and presented as a floating-point number (non-locale aware).</li>
+<li>g - shorter of %e and %f.</li>
+<li>G - shorter of %E and %f.</li>
+<li>o - the argument is treated as an integer, and presented as an octal number.</li>
+<li>s - the argument is treated as and presented as a string.</li>
+<li>x - the argument is treated as an integer and presented as a hexadecimal number (with lowercase letters).</li>
+<li>X - the argument is treated as an integer and presented as a hexadecimal number (with uppercase letters).</li>
+</ul><h3>argument numbering/swapping</h3>
+
+<p>The format string supports argument numbering/swapping. Here is an example:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">format</span> <span class="o">=</span> <span class="s1">'There are %d monkeys in the %s'</span><span class="p">,</span>
+    <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="nx">format</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="s1">'world'</span><span class="p">);</span>
+</pre></div>
+
+<p>Imagine, we want to rewrite the text without changing the code itself:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">format</span> <span class="o">=</span> <span class="s1">'The %s contains %d'</span><span class="p">,</span>
+    <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="nx">format</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="s1">'world'</span><span class="p">);</span>
+</pre></div>
+
+<p>We have some problems now: The order and type of placeholders does not match the order of arguments in the code. So we have to rewrite the format string:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">format</span> <span class="o">=</span> <span class="s1">'The %2$s contains %1$d'</span><span class="p">,</span>
+    <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="nx">format</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="s1">'world'</span><span class="p">);</span>
+</pre></div>
+
+<h3>padding and justifying</h3>
+
+<p>Point-padded and right justified String, length is 10:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="s2">"%'.+10s"</span><span class="p">,</span> <span class="s2">"test"</span><span class="p">);</span>
+<span class="c1">//text == "......test"</span>
+</pre></div>
+
+<p>Point-padded and left justified String, length is 10:</p>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="s2">"%'.-10s"</span><span class="p">,</span> <span class="s2">"test"</span><span class="p">);</span>
+<span class="c1">//text == "test......"</span>
+</pre></div>
+
+<h3>precision</h3>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="s2">"%.2f"</span><span class="p">,</span> <span class="mf">3.141</span><span class="p">);</span>
+<span class="c1">//text == "3.14"</span>
+</pre></div>
+
+<h3>always signed values</h3>
+
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">sprintf</span><span class="p">(</span><span class="s2">"%+.2f"</span><span class="p">,</span> <span class="mf">3.141</span><span class="p">);</span>
+<span class="c1">//text == "+3.14"</span>
+</pre></div>
+
+<h2>More examples</h2>
+
+<p>Check out test/index.html for more examples on <code>sprintf.js</code></p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
