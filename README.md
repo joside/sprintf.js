@@ -1,6 +1,8 @@
 sprintf.js
 ==========
 
+[![Build Status](https://travis-ci.org/joside/sprintf.js.svg)](https://travis-ci.org/joside/sprintf.js)
+
 #### Another implementation of sprintf in JavaScript ####
 
 `sprintf` returns - like the sprintf versions in other languages - a formatted String.
