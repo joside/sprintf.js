@@ -1,0 +1,27 @@
+{
+  "name": "sprintf",
+  "version": "1.0.0",
+  "description": "sprintf.js ==========",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joside/sprintf.js.git"
+  },
+  "author": "Michael Jostmeyer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joside/sprintf.js/issues"
+  },
+  "homepage": "https://github.com/joside/sprintf.js#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^4.3.1",
+    "mocha": "^4.0.1"
+  }
+}
