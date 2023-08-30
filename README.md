@@ -1,7 +1,7 @@
 sprintf.js
 ==========
 
-#### Another implementation of sprintf in JavaScript ####
+## Another implementation of sprintf in JavaScript ##
 
 `sprintf` returns - like the sprintf versions in other languages - a formatted String.
 
@@ -15,7 +15,7 @@ sprintf.js
 Using sprintf.js
 ----------------
 
-To use `sprintf.js` in your application, download the latest release and copy 
+To use `sprintf.js` in your application, download the latest release and copy
 `libs/sprintf.js` to a suitable location. Then include it in your HTML
 like so:
 
@@ -30,11 +30,12 @@ Documentation
 
 ## format ##
 
-The format string is composed of zero or more directives: ordinary characters (excluding %) that are copied directly to the result, and conversion specifications, each of which results in fetching its own parameter. 
+The format string is composed of zero or more directives: ordinary characters (excluding %) that are copied directly to the result, and conversion specifications, each of which results in fetching its own parameter.
 
 Each conversion specification consists of a percent sign (%), followed by one or more of these elements, in order:
 
 1. An optional sign specifier that forces a sign (- or +) to be used on a number. By default, only the - sign is used on a number if it's negative. This specifier forces positive numbers to have the + sign attached as well.
+
 * An optional padding specifier that says what character will be used for padding the results to the right string size. This may be a space character or a 0 (zero character). The default is to pad with spaces. An alternate padding character can be specified by prefixing it with a single quote (').
 * An optional alignment specifier that says if the result should be left-justified or right-justified. The default is right-justified; a - character here will make it left-justified.
 * An optional number, a width specifier that says how many characters (minimum) this conversion should result in.
@@ -43,6 +44,7 @@ Each conversion specification consists of a percent sign (%), followed by one or
 A type specifier that says what type the argument data should be treated as.
 
 ### Possible types ###
+
 * % - a literal percent character. No argument is required.
 * b - the argument is treated as an integer, and presented as a binary number.
 * c - the argument is treated as an integer, and presented as the character with that ASCII value.
@@ -60,6 +62,7 @@ A type specifier that says what type the argument data should be treated as.
 * X - the argument is treated as an integer and presented as a hexadecimal number (with uppercase letters).
 
 ### argument numbering/swapping ###
+
 The format string supports argument numbering/swapping. Here is an example:
 
 ```javascript
@@ -84,12 +87,14 @@ var format = 'The %2$s contains %1$d',
 ### padding and justifying ###
 
 Point-padded and right justified String, length is 10:
+
 ```javascript
 var text = sprintf("%'.+10s", "test");
 //text == "......test"
 ```
 
 Point-padded and left justified String, length is 10:
+
 ```javascript
 var text = sprintf("%'.-10s", "test");
 //text == "test......"
