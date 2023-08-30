@@ -7,9 +7,9 @@
  * @license BSD 3-Clause License
  */
 
-let re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|E|f|F|g|G)(.*)/;
+const re = /([^%]*)%(\d\$)?('.|0|\x20)?(-)?(\+)?(\d+)?(\.\d+)?(%|b|c|s|i|d|u|o|x|X|e|E|f|F|g|G)(.*)/;
 
-let e = (value, precision, uppercase) => {
+const e = (value, precision, uppercase) => {
     value = parseFloat(value,10);
     value = value.toExponential(precision);
     if(uppercase){
@@ -18,7 +18,7 @@ let e = (value, precision, uppercase) => {
     return value;
 }
 
-let f = (value, precision) => {
+const f = (value, precision) => {
     value = parseFloat(value,10);
     if(precision){
         value = value.toFixed(precision);
@@ -26,8 +26,8 @@ let f = (value, precision) => {
     return value;
 }
 
-let g = (value, precision, uppercase) => {
-    var v1 = e(value, precision, uppercase).toString(),
+const g = (value, precision, uppercase) => {
+    const v1 = e(value, precision, uppercase).toString(),
         v2 = f(value, precision).toString();
 
     if(v1.length >= v2.length) {
@@ -38,7 +38,7 @@ let g = (value, precision, uppercase) => {
 }
 
 module.exports = function(){
-    var str,
+    let str,
         a = [],
         left,
         right,
