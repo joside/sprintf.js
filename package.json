@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/joside/sprintf.js#readme",
   "devDependencies": {
-    "gulp": "^4.0.2",
-    "gulp-mocha": "^4.3.1",
-    "mocha": "^4.0.1"
+    "jest": "^29.6.4"
   }
 }
