@@ -14,12 +14,6 @@ sprintf.js
 * Mozilla Firefox 14 and higher
 * Chrome 18 and higher
 
-### Small Demo ###
-<http://playground.josi.de/sprintf/index.html>
-
-### Unit test ###
-<http://playground.josi.de/sprintf/test/index.html>
-
 Using sprintf.js
 ----------------
 
