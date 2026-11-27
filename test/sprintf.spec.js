@@ -1,144 +1,198 @@
+const { describe, it } = require('node:test');
+const assert = require('node:assert/strict');
 const sprintf = require('../libs/sprintf');
 
 describe('sprintf strings', () => {
     it('inserts basic strings', () => {
         const result = sprintf('hello %s', 'world');
-        expect(result).toBe('hello world');
+        assert.equal(result, 'hello world');
     })
 
     it('inserts percentage sign', () => {
-		expect(sprintf('%%')).toBe('%');
+		assert.equal(sprintf('%%'), '%');
 	});
 });
 
 describe('integer', () => {
 	it('inserts integers on %d', () => {
-		expect(sprintf('%d monkeys', 12)).toBe('12 monkeys');
+		assert.equal(sprintf('%d monkeys', 12), '12 monkeys');
 	});
 
     it('inserts strings as integers on %d', () => {
-		expect(sprintf('%d monkeys', '12')).toBe('12 monkeys');
+		assert.equal(sprintf('%d monkeys', '12'), '12 monkeys');
 	});
 });
 
 describe('hexadecimal', () => {
 	it('inserts lowercase hexadecimal values on %x', () => {
-		expect(sprintf('value: %x', 255)).toBe('value: ff');
+		assert.equal(sprintf('value: %x', 255), 'value: ff');
 	});
 
 	it('inserts uppercase hexadecimal values on %X', () => {
-		expect(sprintf('value: %X', 255)).toBe('value: FF');
+		assert.equal(sprintf('value: %X', 255), 'value: FF');
 	});
 });
 
 describe('float', () => {
 	it('inserts floats on %f', () => {
-		expect(sprintf('%f', 3.141)).toBe('3.141');
+		assert.equal(sprintf('%f', 3.141), '3.141');
 	});
 
 	it('inserts strings as floats on %f', () => {
-    	expect(sprintf('%f', '12.01')).toBe('12.01');
+    	assert.equal(sprintf('%f', '12.01'), '12.01');
     });
 
     it('inserts floats with fixed 2 decimals on %.2f', () => {
-    	expect(sprintf('%.2f', 3.141)).toBe('3.14');
+    	assert.equal(sprintf('%.2f', 3.141), '3.14');
     });
 
     it('inserts positive floats with fixed decimals always signed on %+.2f', () => {
-    	expect(sprintf('%+.2f', 3.141)).toBe('+3.14');
+    	assert.equal(sprintf('%+.2f', 3.141), '+3.14');
     });
 
     it('inserts negative floats with fixed decimals always signed on %+.2f', () => {
-    	expect(sprintf('%+.2f', -3.141)).toBe('-3.14');
+    	assert.equal(sprintf('%+.2f', -3.141), '-3.14');
     });
 });
 
 describe('scientific notation', function() {
 	it('without precision, lowercase e ok', () => {
-	    expect(sprintf('%e', 3000000000000)).toBe('3e+12');
+	    assert.equal(sprintf('%e', 3000000000000), '3e+12');
 	});
 	it('with precision=4, lowercase e ok', () => {
-	    expect(sprintf('%.4e', 1234.56789)).toBe('1.2346e+3');
+	    assert.equal(sprintf('%.4e', 1234.56789), '1.2346e+3');
 	});
 	it('without precision, uppercase e ok', () => {
-	    expect(sprintf('%E', 3000000000000)).toBe('3E+12');
+	    assert.equal(sprintf('%E', 3000000000000), '3E+12');
 	});
 	it('with precision=4, uppercase e ok', () => {
-	    expect(sprintf('%.4E', 1234.56789)).toBe('1.2346E+3');
+	    assert.equal(sprintf('%.4E', 1234.56789), '1.2346E+3');
 	});
 });
 
 describe('float or scientific notation', function() {
 	it('without precision, should be exponential, lowercase e ok', () => {
-	    expect(sprintf('%g', 3000000000000)).toBe('3e+12');
+	    assert.equal(sprintf('%g', 3000000000000), '3e+12');
 	});
 	it('with precision=4, should be float ok', () => {
-	    expect(sprintf('%.4g', 1234.56789)).toBe('1234.5679');
+	    assert.equal(sprintf('%.4g', 1234.56789), '1234.5679');
 	});
 	it('without precision, should be exponential, uppercase e ok', () => {
-	    expect(sprintf('%G', 3000000000000)).toBe('3E+12');
+	    assert.equal(sprintf('%G', 3000000000000), '3E+12');
 	});
 	it('with precision=4, should be float ok', () => {
-	    expect(sprintf('%.4G', 1234.56789)).toBe('1234.5679');
+	    assert.equal(sprintf('%.4G', 1234.56789), '1234.5679');
 	});
 });
 
 describe('octal', function() {
 	it('inserts octal numbers', () => {
-	    expect(sprintf('%o', 8)).toBe('10');
+	    assert.equal(sprintf('%o', 8), '10');
 	});
 	it('inserts negative octal numbers', () => {
-	    expect(sprintf('%o', -8)).toBe('-10');
+	    assert.equal(sprintf('%o', -8), '-10');
 	});
 	it('inserts octal numbers from strings', () => {
-	    expect(sprintf('%o', '8')).toBe('10');
+	    assert.equal(sprintf('%o', '8'), '10');
 	});
 });
 
 describe('binary', function() {
 	it('inserts binary values', () => {
-	    expect(sprintf('%b', 255)).toBe('11111111');
+	    assert.equal(sprintf('%b', 255), '11111111');
 	});
 	it('inserts binary values from strings', () => {
-	    expect(sprintf('%b', '255')).toBe('11111111');
+	    assert.equal(sprintf('%b', '255'), '11111111');
 	});
 });
 
 describe('unsigned integer', function() {
 	it('removes signs from floats', () => {
-	    expect(sprintf('%u', -3.141)).toBe('3');
+	    assert.equal(sprintf('%u', -3.141), '3');
 	});
 });
 
 describe('char', function() {
 	it('replaces with charcode on %c', () => {
-	    expect(sprintf('%c', 65)).toBe('A');
+	    assert.equal(sprintf('%c', 65), 'A');
 	});
 	it('replaces with charcode on %c', () => {
-	    expect(sprintf('%c', 66)).toBe('B');
+	    assert.equal(sprintf('%c', 66), 'B');
 	});
 	it('replaces with charcode from string on %c', () => {
-	    expect(sprintf('%c', '65')).toBe('A');
+	    assert.equal(sprintf('%c', '65'), 'A');
 	});
 });
 
 describe('sprintf argument order', function() {
 	it('multiple arguments in correct order', () => {
-	    expect(sprintf('%3.1f%% of %d MB used', 34.56, 1024)).toBe('34.6% of 1024 MB used');
+	    assert.equal(sprintf('%3.1f%% of %d MB used', 34.56, 1024), '34.6% of 1024 MB used');
 	});
 	it('respects manual defined order', () => {
-	    expect(sprintf('%2$3.1f%% of %1$d MB used', 1024, 34.56)).toBe('34.6% of 1024 MB used');
+	    assert.equal(sprintf('%2$3.1f%% of %1$d MB used', 1024, 34.56), '34.6% of 1024 MB used');
 	});
 	it('respects manual defined order', () => {
-	    expect(sprintf('My %2$s account: %1$\'.+10.2f %3$s', 0.592, 'giro', 'EUR')).toBe('My giro account: .....+0.59 EUR');
+	    assert.equal(sprintf('My %2$s account: %1$\'.+10.2f %3$s', 0.592, 'giro', 'EUR'), 'My giro account: .....+0.59 EUR');
 	});
 });
 
 describe('strings', function() {
 	it('adds dots and justifies right', () => {
-	    expect(sprintf('%\'.+10s', 'A')).toBe('.........A');
+	    assert.equal(sprintf('%\'.+10s', 'A'), '.........A');
 	});
 	it('adds dots and justifies left', () => {
-	    expect(sprintf('%\'.-10s', 'A')).toBe('A.........');
+	    assert.equal(sprintf('%\'.-10s', 'A'), 'A.........');
+	});
+});
+
+describe('regressions', () => {
+	it('keeps text after a newline', () => {
+		assert.equal(sprintf('a %s\nb %s', 1, 2), 'a 1\nb 2');
+	});
+	it('does not re-parse placeholders inside arguments', () => {
+		assert.equal(sprintf('%s %s', '%s', 'x'), '%s x');
+	});
+	it('does not collapse %% inside arguments', () => {
+		assert.equal(sprintf('%s', '100%%'), '100%%');
+	});
+	it('pads integers with zeros on %05d', () => {
+		assert.equal(sprintf('%05d', 42), '00042');
+	});
+	it('puts the sign before zero padding on %05d', () => {
+		assert.equal(sprintf('%05d', -42), '-0042');
+	});
+	it('pads floats with zeros on %06.2f', () => {
+		assert.equal(sprintf('%06.2f', 3.14159), '003.14');
+	});
+	it('rounds to an integer on %.0f', () => {
+		assert.equal(sprintf('%.0f', 2.7), '3');
+	});
+	it('truncates to an empty string on %.0s', () => {
+		assert.equal(sprintf('%.0s', 'abc'), '');
+	});
+	it('truncates non-string values on %.2s', () => {
+		assert.equal(sprintf('%.2s', 1234), '12');
+	});
+	it('keeps all significant digits on %e without precision', () => {
+		assert.equal(sprintf('%e', 1234.5), '1.2345e+3');
+	});
+	it('supports positional arguments above 9', () => {
+		assert.equal(sprintf('%10$s', 1, 2, 3, 4, 5, 6, 7, 8, 9, 'ten'), 'ten');
+	});
+	it('returns undefined for an out-of-range positional argument', () => {
+		assert.equal(sprintf('%3$s', 1), undefined);
+	});
+});
+
+describe('module loading', () => {
+	it('exposes a global sprintf when loaded via <script>', () => {
+		const fs = require('fs');
+		const path = require('path');
+		const vm = require('vm');
+		const code = fs.readFileSync(path.join(__dirname, '../libs/sprintf.js'), 'utf8');
+		const context = {};
+		context.window = context;
+		vm.runInNewContext(code, context);
+		assert.equal(context.sprintf('hello %s', 'world'), 'hello world');
 	});
 });

@@ -1,13 +1,20 @@
 {
   "name": "sprintf",
   "version": "1.0.0",
-  "description": "sprintf.js ==========",
-  "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "description": "Another implementation of the classic sprintf in JavaScript",
+  "main": "libs/sprintf.js",
+  "files": [
+    "libs/sprintf.js"
+  ],
+  "keywords": [
+    "sprintf",
+    "printf",
+    "format",
+    "string"
+  ],
   "scripts": {
-    "test": "jest --watch"
+    "test": "node --test test/sprintf.spec.js",
+    "test:watch": "node --test --watch test/sprintf.spec.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +26,7 @@
     "url": "https://github.com/joside/sprintf.js/issues"
   },
   "homepage": "https://github.com/joside/sprintf.js#readme",
-  "devDependencies": {
-    "jest": "^29.6.4"
+  "engines": {
+    "node": ">=18"
   }
 }
