@@ -1,119 +1,130 @@
 sprintf.js
 ==========
 
-## Another implementation of sprintf in JavaScript ##
+[![CI](https://github.com/joside/sprintf.js/actions/workflows/ci.yml/badge.svg)](https://github.com/joside/sprintf.js/actions/workflows/ci.yml)
 
-`sprintf` returns - like the sprintf versions in other languages - a formatted String.
-
-### Targeted platforms ###
-
-`sprintf.js` currently targets the following platforms:
-
-* Mozilla Firefox 14 and higher
-* Chrome 18 and higher
-
-Using sprintf.js
-----------------
-
-To use `sprintf.js` in your application, download the latest release and copy
-`libs/sprintf.js` to a suitable location. Then include it in your HTML
-like so:
-
-    <script type="text/javascript" src="/path/to/sprintf.js"></script>
-
-Documentation
--------------
-
-    String sprintf ( String format [, mixed arguments] )
-
-# Parameters #
-
-## format ##
-
-The format string is composed of zero or more directives: ordinary characters (excluding %) that are copied directly to the result, and conversion specifications, each of which results in fetching its own parameter.
-
-Each conversion specification consists of a percent sign (%), followed by one or more of these elements, in order:
-
-1. An optional sign specifier that forces a sign (- or +) to be used on a number. By default, only the - sign is used on a number if it's negative. This specifier forces positive numbers to have the + sign attached as well.
-
-* An optional padding specifier that says what character will be used for padding the results to the right string size. This may be a space character or a 0 (zero character). The default is to pad with spaces. An alternate padding character can be specified by prefixing it with a single quote (').
-* An optional alignment specifier that says if the result should be left-justified or right-justified. The default is right-justified; a - character here will make it left-justified.
-* An optional number, a width specifier that says how many characters (minimum) this conversion should result in.
-* An optional precision specifier in the form of a period (`.') followed by an optional decimal digit string that says how many decimal digits should be displayed for floating-point numbers. When using this specifier on a string, it acts as a cutoff point, setting a maximum character limit to the string.
-
-A type specifier that says what type the argument data should be treated as.
-
-### Possible types ###
-
-* % - a literal percent character. No argument is required.
-* b - the argument is treated as an integer, and presented as a binary number.
-* c - the argument is treated as an integer, and presented as the character with that ASCII value.
-* d - the argument is treated as an integer, and presented as a (signed) decimal number.
-* e - the argument is treated as scientific notation (e.g. 1.2e+2). The precision specifier stands for the number of digits after the decimal point since PHP 5.2.1. In earlier versions, it was taken as number of significant digits (one less).
-* E - like %e but uses uppercase letter (e.g. 1.2E+2).
-* u - the argument is treated as an integer, and presented as an unsigned decimal number.
-* f - the argument is treated as a float, and presented as a floating-point number (locale aware).
-* F - the argument is treated as a float, and presented as a floating-point number (non-locale aware).
-* g - shorter of %e and %f.
-* G - shorter of %E and %f.
-* o - the argument is treated as an integer, and presented as an octal number.
-* s - the argument is treated as and presented as a string.
-* x - the argument is treated as an integer and presented as a hexadecimal number (with lowercase letters).
-* X - the argument is treated as an integer and presented as a hexadecimal number (with uppercase letters).
-
-### argument numbering/swapping ###
-
-The format string supports argument numbering/swapping. Here is an example:
+Another implementation of the classic `sprintf` in JavaScript. No dependencies, one file, works in Node.js and in the browser.
 
 ```javascript
-var format = 'There are %d monkeys in the %s',
-    text = sprintf(format,12,'world');
+sprintf('%d monkeys in the %s', 12, 'tree');   // "12 monkeys in the tree"
+sprintf('%3.1f%% of %d MB used', 34.56, 1024); // "34.6% of 1024 MB used"
+sprintf('%05.1f', 3.14159);                    // "003.1"
 ```
 
-Imagine, we want to rewrite the text without changing the code itself:
+## Installation
+
+### Node.js
+
+Install it straight from GitHub:
+
+```bash
+npm install github:joside/sprintf.js
+```
 
 ```javascript
-var format = 'The %s contains %d',
-    text = sprintf(format,12,'world');
+const sprintf = require('sprintf');
 ```
 
-We have some problems now: The order and type of placeholders does not match the order of arguments in the code. So we have to rewrite the format string:
+### Browser
+
+Copy `libs/sprintf.js` into your project and include it. It defines a global `sprintf` function:
+
+```html
+<script src="/path/to/sprintf.js"></script>
+<script>
+  document.title = sprintf('hello %s', 'world');
+</script>
+```
+
+AMD loaders (e.g. RequireJS) are supported as well.
+
+## Usage
+
+```
+String sprintf(String format [, mixed ...arguments])
+```
+
+The format string is copied to the result, with every placeholder replaced by a formatted argument. Text inside the arguments is never parsed as a placeholder.
+
+`sprintf` returns `undefined` when it is called without a format, when a positional argument (`%3$s`) points to an argument that does not exist, or when positional and sequential placeholders are mixed.
+
+### Placeholder syntax
+
+```
+%[argnum$][padding][-][+][width][.precision]type
+```
+
+All parts except `%` and the type are optional and must appear in this order:
+
+| Part        | Meaning |
+|-------------|---------|
+| `argnum$`   | Use the argument at this position (1-based), e.g. `%2$s`. |
+| `padding`   | Character used to reach `width`: a space (default), `0`, or any character prefixed with `'`, e.g. `'.` |
+| `-`         | Left-justify inside `width` (default: right-justify). |
+| `+`         | Prefix positive numbers with `+`. |
+| `width`     | Minimum length of the result. |
+| `.precision`| Number of decimals for `e`, `E`, `f`, `F`, `g`, `G`; maximum length for `s`. |
+
+With `0` padding the sign stays in front: `sprintf('%05d', -42)` is `"-0042"`.
+
+### Types
+
+| Type | Output |
+|------|--------|
+| `%`  | A literal percent sign. Takes no argument. |
+| `b`  | Integer as binary number (unsigned). |
+| `c`  | Integer as the character with that character code. |
+| `d`, `i` | Integer as signed decimal number. |
+| `u`  | Integer as unsigned decimal number. |
+| `o`  | Integer as octal number. |
+| `x`, `X` | Integer as hexadecimal number, lowercase / uppercase letters. |
+| `e`, `E` | Number in scientific notation, e.g. `1.2e+2` / `1.2E+2`. Without precision all significant digits are kept. |
+| `f`, `F` | Number in fixed-point notation. Without precision the number is printed as is. |
+| `g`, `G` | The shorter of `f` and `e` / `E`. |
+| `s`  | String. |
+
+## Examples
+
+### Argument numbering
+
+Placeholders can refer to arguments by position. That way a format string can be reordered (for example for translations) without touching the code that passes the arguments:
 
 ```javascript
-var format = 'The %2$s contains %1$d',
-    text = sprintf(format,12,'world');
+sprintf('There are %1$d monkeys in the %2$s', 12, 'world'); // "There are 12 monkeys in the world"
+sprintf('The %2$s contains %1$d monkeys', 12, 'world');     // "The world contains 12 monkeys"
 ```
 
-### padding and justifying ###
-
-Point-padded and right justified String, length is 10:
+### Padding and justifying
 
 ```javascript
-var text = sprintf("%'.+10s", "test");
-//text == "......test"
+sprintf("%'.10s", 'test');  // "......test"
+sprintf("%'.-10s", 'test'); // "test......"
+sprintf('%05d', 42);        // "00042"
 ```
 
-Point-padded and left justified String, length is 10:
+### Precision
 
 ```javascript
-var text = sprintf("%'.-10s", "test");
-//text == "test......"
+sprintf('%.2f', 3.141); // "3.14"
+sprintf('%.0f', 2.7);   // "3"
+sprintf('%.3s', 'abcdef'); // "abc"
 ```
 
-### precision ###
+### Always signed values
 
 ```javascript
-var text = sprintf("%.2f", 3.141);
-//text == "3.14"
+sprintf('%+.2f', 3.141);  // "+3.14"
+sprintf('%+.2f', -3.141); // "-3.14"
 ```
 
-### always signed values ###
+More examples are in `index.html` and in `test/sprintf.spec.js`.
 
-```javascript
-var text = sprintf("%+.2f", 3.141);
-//text == "+3.14"
+## Development
+
+The tests use the test runner built into Node.js (`node:test`), so there are no dependencies to install. Node.js 18 or newer is required.
+
+```bash
+npm test
 ```
 
-## More examples ##
-
-Check out test/index.html for more examples on `sprintf.js`
+`npm run test:watch` runs the tests in watch mode.
